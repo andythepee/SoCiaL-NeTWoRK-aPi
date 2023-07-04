@@ -1,37 +1,9 @@
 // Require Mongoos and Moment
-const { Schema, model, Types } = require("mongoose");
-const moment = require("moment");
+const { Schema, model } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
+const reactionSchema = require("./Reactions");
 
-const ReactionsSchema = new Schema(
-  {
-    reactionId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
-    reactionBody: {
-      type: String,
-      required: true,
-      maxlength: 280,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: (createdAtVal) =>
-        moment(createdAtVal).format("MMM DD, YYYY [at] hh:mm a"),
-    },
-  },
-  {
-    toJSON: {
-      getters: true,
-    },
-  }
-);
-
-const ThoughtsSchema = new Schema(
+const thoughtSchema = new Schema(
   {
     thoughtText: {
       type: String,
@@ -42,15 +14,13 @@ const ThoughtsSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      // Moment
-      get: (createdAtVal) =>
-        moment(createdAtVal).format("MMM DD, YYYY [at] hh:mm a"),
+      get: (createdAtVal) => dateFormat(createdAtVal),
     },
     username: {
       type: String,
       required: true,
     },
-    reactions: [ReactionsSchema],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
@@ -62,12 +32,12 @@ const ThoughtsSchema = new Schema(
 );
 
 // Total count of reactions
-ThoughtsSchema.virtual("reactionCount").get(function () {
+thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
 
 // Create Thoughts model
-const Thoughts = model("Thoughts", ThoughtsSchema);
+const Thoughts = model("Thoughts", thoughtSchema);
 
 // Export Thoughts Module
 module.exports = Thoughts;
