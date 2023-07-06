@@ -1,24 +1,20 @@
 {
     "name": "SoCiaL-NeTWoRK-aPi",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server.js",
+    "version": "1.0.1",
+    "description": "Mongoose Backend project social network api noSQL",
+    "main": "index.js",
+    "license": "MIT",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node server.js"
+      "start": "node index",
+      "dev": "nodemon index",
+      "seed": "node utils/seed",
+      "heroku-postbuild": "node utils/seed.js"
     },
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/andythepee/SoCiaL-NeTWoRK-aPi"
-    },
-    "author": "Andrew Persaud",
-    "license": "ISC",
-    
-    "homepage": "https://github.com/andythepee/SoCiaL-NeTWoRK-aPi",
     "dependencies": {
       "express": "^4.17.1",
-      "moment": "^2.27.0",
-      "mongoose": "^7.0.2",
-      "nodemon": "^2.0.9"
-    }
+      "mongoose": "^7.0.2"
+    },
+     "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
   }

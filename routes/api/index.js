@@ -2,8 +2,8 @@
 const router = require("express").Router();
 
 // Set routes
-const userRoutes = require("./user-routes");
-const thoughtRoutes = require("./thought-routes");
+const userRoutes = require("./userRoutes");
+const thoughtRoutes = require("./thoughtRoutes");
 
 // Add users to created routes
 router.use("/users", userRoutes);

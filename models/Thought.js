@@ -1,7 +1,7 @@
 // Require Mongoos and Moment
-const { Schema, model } = require("mongoose");
-const dateFormat = require("../utils/dateFormat");
-const reactionSchema = require("./Reactions");
+const { Schema, Types, model } = require("mongoose");
+
+const reactionSchema = require("./Reaction");
 
 const thoughtSchema = new Schema(
   {
@@ -14,7 +14,6 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (createdAtVal) => dateFormat(createdAtVal),
     },
     username: {
       type: String,
@@ -25,19 +24,18 @@ const thoughtSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
-      getters: true,
     },
     id: false,
   }
 );
 
 // Total count of reactions
-thoughtSchema.virtual("reactionCount").get(function () {
-  return this.reactions.length;
-});
+// thoughtSchema.virtual("reactionCount").get(function () {
+//   return this.reactions.length;
+// });
 
 // Create Thoughts model
-const Thoughts = model("Thoughts", thoughtSchema);
+const Thought = model("Thought", thoughtSchema);
 
 // Export Thoughts Module
-module.exports = Thoughts;
+module.exports = Thought;

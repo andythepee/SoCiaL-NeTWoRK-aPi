@@ -1,7 +1,6 @@
-const { Schema, Types } = require("mongoose");
-const dateFormat = require("../utils/dateFormat");
-
+const { Schema, Types, model } = require("mongoose");
 // reaction schema tied to thought
+
 const reactionSchema = new Schema(
   {
     // set custom id to avoid confusion with parent id
@@ -21,7 +20,6 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (createdAtVal) => dateFormat(createdAtVal),
     },
   },
   {
@@ -32,4 +30,9 @@ const reactionSchema = new Schema(
   }
 );
 
+reactionSchema.virtual("formatTime").get(function () {
+  return this.createdAt.toLocaleDateString();
+});
+const Reaction = model("Reaction", reactionSchema);
+// Exports the Schema
 module.exports = reactionSchema;
